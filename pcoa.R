@@ -1,5 +1,6 @@
 library(vegan)
 library(ggplot2)
+library(ape)
 # PCoA无分组，无置信椭圆
 data("varespec")
 df <- varespec
