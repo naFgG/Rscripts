@@ -1,0 +1,33 @@
+---
+title: "week12_R"
+author: "Fan"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r}
+# apply系列函数可以对向量、矩阵、数组应用函数运算
+m <- matrix(1:9, ncol=3)
+# 对矩阵m行求和
+apply(m, 1, sum)
+# 对矩阵m列求和
+apply(m, 2, sum)
+
+# lapply()可以对向量、矩阵、数据框操作，以列表的形式返回函数的结果
+df <- iris[, 1:4]
+# 对df每列求平均
+lapply(df, mean)
+
+# sapply()可以对向量、矩阵、数据框操作，结果以向量或矩阵形式返回结果
+# 对df每列求平均
+sapply(df, mean)
+
+# tapply()对向量操作，根据给定的标准，对向量中保存的数据进行分组，然后对个分组应用指定函数
+# 对向量1-10，奇数为1组，偶数为2组，分组求和
+tapply(1:10, rep(1:2, 5), sum)
+
+# mapply()，以列表或向量的形式给出的参数传递给指定函数，并返回函数执行结果
+# 对df的列求和
+mapply(sum, df)
+```
+

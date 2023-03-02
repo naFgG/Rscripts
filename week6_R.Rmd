@@ -1,0 +1,111 @@
+---
+title: "week_6"
+author: "Fan"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+#加载包
+
+```{r}
+library(tidyverse)
+library(zoo)
+library(writexl)
+```
+
+```{r}
+df <- tibble(grammer=c("Python", "C", "Java", "GO", "NA", "SQL", "PHP", "Python"), score=c(1,2,NA,4,5,6,7,10))
+df
+
+df1 <- data.frame(grammer=c("Python", "C", "Java", "GO", "NA", "SQL", "PHP", "Python"), score=c(1,2,NA,4,5,6,7,10))
+df1
+
+# 提取
+df1 %>% filter(grammer == "Python")
+
+df2 <- dplyr::filter(df1, grepl('P', grammer))
+df2
+
+# 查看列名
+names(df)
+
+# 修改列名
+# 新变量接收
+df = df %>% rename(popularity = score)
+names(df)
+
+# 计数
+df %>% count(grammer)
+
+
+# 缺失值处理
+# zoo::na.approx计算缺失值的下上值的差值，以填充缺失值
+# mutate 将=号右边的新值赋予左边的值
+df = df %>% mutate(popularity = zoo::na.approx(popularity))
+df
+
+
+# 筛选popularity列中值大于3的行
+df %>% filter(popularity>3)
+
+
+# 去重
+# .keep_all = TRUE显示所有的变量, = FALSE只显示降重列
+df %>% distinct(grammer, .keep_all = TRUE)
+
+
+# 列平均值
+df %>% summarise(popularity_avg = mean(popularity))
+
+
+# 单拿一列，变为序列
+df$grammer
+
+
+# 保存为Excel
+writexl::write_xlsx(df, "filename.xlsx")
+
+
+# 查看数据的行数列数
+# 行 列
+dim(df)
+
+
+# 提取popularity列值大于3小于7的行
+df %>% filter(popularity>3 & popularity<7)
+
+
+# 交互两列的位置
+df %>% select(popularity, grammer)
+
+
+# 筛选行：提取popularity列最大值所在的行
+df %>% filter(popularity == max(popularity))
+
+
+# 查看数据: 查看首尾几行数据
+head(df)
+tail(df)
+
+
+# 修改数据
+# 删除最后一行数据
+df %>% slice(-n())
+# 选择第3行
+df %>% slice(3)
+# 添加一行数据
+newrow = tibble(grammer="Perl", popularity=6)
+df %>% newrow
+
+
+# 数据整理
+# 对数据按popularity列值从大到小排序
+df %>% arrange(desc(popularity))
+# 对数据按popularity列值从小到大排序
+df %>% arrange(popularity)
+
+
+# 字符统计：统计grammer列每个字符串的长度
+# mutate也可以有增加列功能, strlen为新列
+df %>% mutate(strlen = str_length(grammer))
+```
