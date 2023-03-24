@@ -1,4 +1,3 @@
-setwd("D:/分析单/沈柱_彭露DOE20227168/售后20221213/demand2")
 rm(list = ls())
 library(UpSetR)
 library(hash)
