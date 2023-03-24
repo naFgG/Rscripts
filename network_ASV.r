@@ -1,4 +1,3 @@
-setwd("D:/分析单/季孔庶DOE20225586/售后20221209/16S")
 rm(list = ls())
 library(igraph)
 library(psych)
