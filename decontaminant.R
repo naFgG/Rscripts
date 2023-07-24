@@ -4,8 +4,8 @@ library(decontam)
 library(readxl)
 
 args <- commandArgs(T)
-if (length(args) != 4){
-  cat('Usage: Rscript decontaminant.R 云平台确认单.xlsx mapping.org.txt feature.org.xls feature_tax.org.xls\n')
+if (length(args) != 5){
+  cat('Usage: Rscript decontaminant.R 确认单.xlsx mapping.org.txt feature.org.xls feature_tax.org.xls outpath\n')
   q(status=1)
 }
 
@@ -22,7 +22,7 @@ mapp <- sample_data(mapp)
 ps <- phyloseq(otu, mapp, tax)
 ## mark negative samples
 sample_data(ps)$is.neg <- 
-  rownames(sample_data(ps)) %in% excel[grep("阴性-", excel$"样本下机名称"), ]$"样本分析名称"
+  rownames(sample_data(ps)) %in% excel[grep("^阴性-.+$|^阴-.+$", excel$"样本下机名称"), ]$"样本分析名称"
 
 # identify contaminants with "prevalence" method and default threshold
 id.contam <- isContaminant(ps, method="prevalence", neg="is.neg")
@@ -31,20 +31,15 @@ id.contam <- isContaminant(ps, method="prevalence", neg="is.neg")
 keep <- prune_taxa(!id.contam$contaminant, ps)
 ## rewrite file
 otu.new <- as.data.frame(otu_table(keep))
-otu.new <- otu.new[, !colnames(otu.new) %in% excel[grep("阴性-", excel$"样本下机名称"), ]$"样本分析名称"]
+otu.new <- otu.new[, !colnames(otu.new) %in% excel[grep("^阴性-.+$|^阴-.+$", excel$"样本下机名称"), ]$"样本分析名称"]
 otu.new <- otu.new[apply(otu.new, 1, sum) > 0, ]
 otu.new <- cbind(rownames(otu.new), otu.new)
 colnames(otu.new)[1] <- "ASV_ID"
-write.table(otu.new, file="feature.xls", sep="\t", row.names=F, quote=F)
+write.table(otu.new, file=paste0(args[5], "/feature.xls"), sep="\t", row.names=F, quote=F)
 
 tax.new <- as.data.frame(tax_table(keep))
-tax.new <- tax.new[, !colnames(tax.new) %in% excel[grep("阴性-", excel$"样本下机名称"), ]$"样本分析名称"]
+tax.new <- tax.new[, !colnames(tax.new) %in% excel[grep("^阴性-.+$|^阴-.+$", excel$"样本下机名称"), ]$"样本分析名称"]
 tax.new <- tax.new[otu.new[, 1], ]
 tax.new <- cbind(rownames(tax.new), tax.new)
 colnames(tax.new)[1] <- "ASV_ID"
-write.table(tax.new, file="feature_tax.xls", sep="\t", row.names=F, quote=F)
-
-mapp.new <- mapp[!rownames(mapp) %in% excel[grep("阴性-", excel$"样本下机名称"), ]$"样本分析名称", ]
-mapp.new <- cbind(rownames(mapp.new), mapp.new)
-colnames(mapp.new)[1] <- "#SampleID"
-write.table(mapp.new, file="mapping.txt", sep="\t", row.names=F, quote=F)
+write.table(tax.new, file=paste0(args[5], "/feature_tax.xls"), sep="\t", row.names=F, quote=F)
