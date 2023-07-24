@@ -3,7 +3,7 @@ library(microDecon)
 library(readxl)
 library(tidyverse)
 
-excel <- read_excel('台确认单.xlsx', sheet='样本信息')
+excel <- read_excel('xlsx', sheet='样本信息')
 mapp <- read.table('mapping.org.txt', header=TRUE, comment.char="", row.names=1)
 feature <- read.table('feature.xls', header=TRUE, check.names=FALSE)
 
