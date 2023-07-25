@@ -70,6 +70,11 @@ if (axis.length <= 4){
   samples <- samples[-1]
   species <- data.frame(rda.scaling$species)[1:2]
   enviro <- data.frame(rda.scaling$biplot)[1:2]
+  for (i in 1: length(rownames(enviro))){
+    if (grepl("`", rownames(enviro)[i])){
+      rownames(enviro)[i] <- gsub("`", "", rownames(enviro)[i])
+    }
+  }    
   # 样本与环境因子
   p1 <- ggplot(samples) + 
     scale_color_manual(values=mycol) +
@@ -179,6 +184,11 @@ if (axis.length <= 4){
   samples <- samples[-1]
   species <- data.frame(cca.scaling$species)[1:2]
   enviro <- data.frame(cca.scaling$biplot)[1:2]
+  for (i in 1: length(rownames(enviro))){
+    if (grepl("`", rownames(enviro)[i])){
+      rownames(enviro)[i] <- gsub("`", "", rownames(enviro)[i])
+    }
+  }
   # 样本与环境因子
   p1 <- ggplot(samples) + 
     scale_color_manual(values=mycol) +
