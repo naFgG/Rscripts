@@ -9,6 +9,7 @@ mycol <- c("#7FC97F","#BEAED4","#FDC086","#386CB0","#F0027F","#BF5B17",
 
 # 列为样本，行为物种
 genus <- read.table(args[1], header=TRUE, row.names=1, sep="\t")
+# 只保留Sample，Group两列
 mapping <- read.table(args[2], header=TRUE, sep="\t")
 genus <- t(genus)
 # 列为环境因子，行为样本
