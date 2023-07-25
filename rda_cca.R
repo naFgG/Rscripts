@@ -5,9 +5,11 @@ library(ggplot2)
 mycol <- c("#7FC97F","#BEAED4","#FDC086","#386CB0","#F0027F","#BF5B17",
            "#666666","#1B9E77","#7570B3","#66A61E", "#E6AB02","#A6761D")
 
+# 列为样本，行为物种
 genus <- read.table('genus.top10.xls', header=TRUE, row.names=1, sep="\t")
 mapping <- read.table('mapping.txt', header=TRUE, sep="\t")
 genus <- t(genus)
+# 列为环境因子，行为样本
 env <- read.table('pc.xls', row.names=1, sep='\t', header=TRUE,
                   stringsAsFactors=FALSE, check.names=FALSE)
 # 调整环境因子中样品的顺序
