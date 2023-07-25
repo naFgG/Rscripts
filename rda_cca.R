@@ -8,9 +8,9 @@ mycol <- c("#7FC97F","#BEAED4","#FDC086","#386CB0","#F0027F","#BF5B17",
            "#666666","#1B9E77","#7570B3","#66A61E", "#E6AB02","#A6761D")
 
 # 列为样本，行为物种
-genus <- read.table(args[1], header=TRUE, row.names=1, sep="\t")
+genus <- read.table(args[1], header=TRUE, row.names=1, sep="\t", check.names=FALSE)
 # 只保留Sample，Group两列
-mapping <- read.table(args[2], header=TRUE, sep="\t")
+mapping <- read.table(args[2], header=TRUE, sep="\t", check.names=FALSE)
 genus <- t(genus)
 # 列为环境因子，行为样本
 env <- read.table(args[3], row.names=1, sep='\t', header=TRUE,
