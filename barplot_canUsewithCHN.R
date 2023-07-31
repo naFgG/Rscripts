@@ -10,7 +10,7 @@ mycol <- c("#A3A3A6", "#64221D", "#B72435", "#E46D55", "#F2B587", "#FCD3DF", "#E
 
 
 mdata <- melt(otu)
-
+# 使用Windows字体
 font_add("Hei", "simhei.ttf")
 font_add("HeiBold", "msyhbd.ttc")
 font_add("TimesIta", "timesi.ttf")
@@ -19,8 +19,8 @@ showtext_auto()
 p <- ggplot(mdata, aes(x=variable, y=value * 100, fill=Taxonomy)) +
   geom_bar(stat="identity", color="black") +
   xlab("") +
-  ylab("门水平相对丰度 (%)") +
-  labs(title="土地利用方式") +
+  ylab("中文") +
+  labs(title="中文") +
   scale_fill_manual(values=rev(mycol)) +
   theme_classic() +
   theme(
