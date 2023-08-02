@@ -39,7 +39,10 @@ accumresult <- function(x, y="", factor="", level, scale="",
   return(result)
 }
 
+# cols: samples
+# rows: species
 data <- read.table("绘图数据/传统方法各位点鱼类和捕获数.xls", header=T, sep="\t", row.names=1, check.names=FALSE)
+data <- t(data)
 
 Accum <- accumresult(
   data,
