@@ -36,7 +36,8 @@ fig <- ggplot(p1, aes(x=group, y=abd, shape=group, color=group)) +
   # 配对统计，CON组为ref组
   stat_compare_means(label="p.signif", method="t.test", ref.group="CON", 
                      symnum.args=list(cutpoints=c(0, 0.001, 0.01, 0.05, Inf), 
-                                      symbols=c("***", "**", "*", "")))
+                                      symbols=c("***", "**", "*", "")), 
+                    label.y=1.1, size=12)
 
 pdf('test.pdf')
 print(fig)
