@@ -75,5 +75,5 @@ if (args[4] == "pearson") {
 } else if (args[4] == "spearman") {
   pdf(paste0(args[3], "/", names, "_Spearman_heatmap.pdf"))
 }
-pheatmap(cor.r, display_numbers=cor.p, number_color="black", color=colors)
+pheatmap(cor.r, display_numbers=cor.p, number_color="black", color=colors, angle_col=45)
 dev.off()
