@@ -5,7 +5,7 @@ library(tidyverse)
 library(reshape2)
 library(openxlsx)
 
-mapping <- read.table("mapping.txt", sep="\t", check.names=F, header=T, quote="")
+mapping <- read.table("样本-分组表", sep="\t", check.names=F, header=T, quote="")
 colnames(mapping) <- c("sample", "group")
 mapping$group <- factor(mapping$group, levels=unique(mapping$group))
 #> import tree data
