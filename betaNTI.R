@@ -9,9 +9,9 @@ mapping <- read.table("mapping.txt", sep="\t", check.names=F, header=T, quote=""
 colnames(mapping) <- c("sample", "group")
 mapping$group <- factor(mapping$group, levels=unique(mapping$group))
 #> import tree data
-tree <- read.tree("rep_phylo.tre")
+tree <- read.tree(".tre格式发育树")
 #> import asv data
-asv <- read.table("feature_54samples_filtered_16S.xls", sep="\t", header=T, row.names=1, check.names=F)
+asv <- read.table("丰度表", sep="\t", header=T, row.names=1, check.names=F)
 #> rownames are sample names
 t_asv <- t(asv)
 #> prune tree to match community data
