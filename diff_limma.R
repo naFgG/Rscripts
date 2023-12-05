@@ -10,6 +10,8 @@ data <- data[mapp$Sample]
 
 ### construct design matrix ####
 samples.freq <- count(mapp, Group)
+rownames(samples.freq) <- samples.freq$Group
+samples.freq <- samples.freq[unique(mapp$Group), ]
 samples <- factor(c(rep(samples.freq[1, 1], samples.freq[1, 2]), 
                     rep(samples.freq[2, 1], samples.freq[2, 2])))
 #> 0: No intercept
