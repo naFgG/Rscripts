@@ -13,7 +13,8 @@ samples.freq <- count(mapp, Group)
 rownames(samples.freq) <- samples.freq$Group
 samples.freq <- samples.freq[unique(mapp$Group), ]
 samples <- factor(c(rep(samples.freq[1, 1], samples.freq[1, 2]), 
-                    rep(samples.freq[2, 1], samples.freq[2, 2])))
+                    rep(samples.freq[2, 1], samples.freq[2, 2])), 
+                 levels=unique(mapp$Group))
 #> 0: No intercept
 design.mat <- model.matrix(~ samples + 0)
 colnames(design.mat) <- levels(samples)
