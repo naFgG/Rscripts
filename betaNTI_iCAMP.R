@@ -4,13 +4,14 @@ library(treeio)
 library(reshape2)
 library(tidyverse)
 
-mapping <- read.table("16S/mapping.txt", sep="\t", check.names=F, header=T, quote="", row.names=1)
+mapping <- read.table("样本-分组文件", sep="\t", check.names=F, header=T, quote="", row.names=1)
 mapping$Group <- factor(mapping$Group, levels=unique(mapping$Group))
-tree <- read.tree("16S/rep_phylo.tre")
-asv <- read.table("16S/feature_54samples_filtered_16S.xls", sep="\t", header=T, row.names=1, check.names=F)
+tree <- read.tree(".tre格式发育树")
+asv <- read.table("ASV/OTU表", sep="\t", header=T, row.names=1, check.names=F)
+# 行为样本名
 t_asv <- t(asv)
 
-pd.big <- pdist.big(tree=tree, wd="icamp_test", nworker=2)
+pd.big <- pdist.big(tree=tree, wd="输出文件夹", nworker=2)
 bNTI <- bNTI.big(t_asv, 
                  meta.group=mapping, 
                  pd.desc=pd.big$pd.file, 
@@ -20,7 +21,7 @@ bNTI <- bNTI.big(t_asv,
                  nworker=2, memo.size.GB=16, 
                  weighted=T, 
                  exclude.consp=F, 
-                 rand=10, 
+                 rand=1000, 
                  output.dtail=T, 
                  RC=F, 
                  trace=T)
@@ -40,7 +41,7 @@ plot.nti <- bNTI.nti[, c("Group.x", "value")]
 
 library(ggplot2)
 mycol <- c("#7FC97F", "#BEAED4", "#FDC086", "#386CB0", "#F0027F", "#BF5B17")
-pdf('icamp_test/betaNTI.pdf', width=6, height=5)
+pdf('betaNTI.pdf', width=6, height=5)
 ggplot(plot.nti, aes(x=Group.x, y=value, color=Group.x)) + 
   geom_boxplot(size=1) + 
   geom_jitter(size=2) + 
