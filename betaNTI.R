@@ -19,7 +19,7 @@ prune_tree <- prune.sample(t_asv, tree)
 #> Match taxa in phylogeny and data
 match_phylo_asv <- match.phylo.data(prune_tree, asv)
 
-### 第一种方法, 得到的数据是对称矩阵 ####
+### 第一种方法计算的是betaNTI, 得到的数据是对称矩阵 ####
 #> calculate betaNTI
 set.seed(1234567)
 #> comdistnt: Calculates inter-community mean nearest taxon distance
@@ -60,7 +60,7 @@ if (identical(colnames(match_phylo_asv$data), colnames(beta.mntd.weighted))) {
 }
 
 
-### 第二种方法, 直接得到每个样本的NTI，且有p值 ####
+### 第二种方法计算的是NTI, 直接得到每个样本的NTI，且有p值 ####
 #> 得到遗传距离矩阵
 pd_dist <- cophenetic(match_phylo_asv$phy)
 #> 计算MNTD obs
