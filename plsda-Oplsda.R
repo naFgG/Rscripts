@@ -9,8 +9,10 @@ mycol <- c("#7FC97F", "#BEAED4", "#FDC086", "#386CB0", "#F0027F", "#BF5B17",
            "#666666", "#1B9E77", "#7570B3", "#66A61E", "#E6AB02", "#A6761D")
 path <- file_path_sans_ext(args[1])
 
+#> data matrix, samples are rownames
 df <- read.table(args[1], header=T, row.names=1, check.names=F, quote="")
 df <- t(df)
+#> metadata, samples are rownames
 meta <- read.table(args[2], header=T, check.names=F, quote="")
 rownames(meta) <- meta$Sample
 meta$Group <- factor(meta$Group, levels=unique(meta$Group))
