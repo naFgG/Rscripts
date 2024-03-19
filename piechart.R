@@ -33,6 +33,3 @@ ggplot(top15, aes(x=foo, y=as.numeric(abundance)/sum(df$Sum)*100, fill=id)) +
   scale_fill_manual(values=mycol)
 dev.off()
 
-df.w <- top15[, c(1, 2)]
-colnames(df.w) <- c("Taxon", "unmate-female")
-write.table(df.w, file=args[3], sep="\t", quote=F, row.names=F)
