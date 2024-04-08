@@ -38,11 +38,12 @@ p <- ggplot(df.plot, aes(x=category, y=Abundance, stratum=info, alluvium=flow, f
   geom_stratum(fill="white") + 
   #> 画出连线
   geom_flow() + 
-  geom_text(stat='stratum', infer.label=T, repel=T) + 
+  geom_text(stat='stratum', aes(label=after_stat(stratum))) + 
   labs(x="", y="") + 
   theme_minimal() +
   theme(panel.grid=element_blank(), 
         axis.text.y=element_blank(), 
+        axis.text.x=element_text(color="black"),
         legend.position="none") +
   scale_fill_manual(values=c(color_sample[1: dim(meta)[1]], 
                              color_otu[1: length(unique(tax$ASV))], 
