@@ -4,7 +4,7 @@ library(reshape2)
 library(ggh4x)
 
 args <- commandArgs(T)
-args <- c("species.others.top15.xls", "mapping.txt", "species.others.top15.pdf")
+# args <- c("species.others.top15.xls", "mapping.txt", "species.others.top15.pdf")
 
 otu <- read.table(args[1], header=T, sep="\t", check.names=F, quote="")
 barcol <- colorRampPalette(mycol)(nrow(otu))
@@ -18,7 +18,7 @@ df$Group <- factor(df$Group, levels=unique(meta$Group))
 
 p <- ggplot(df, aes(x=abundance, y=weave_factors(Sample, Group), fill=tax)) + 
   geom_vline(xintercept=c(0, 0.2, 0.4, 0.6, 0.8), color="black")+
-  geom_bar(stat="identity", position="fill", color="black", size=0.5, width=0.5) + 
+  geom_bar(stat="identity", position="fill", color="black", linewidth=0.5, width=0.6) + 
   labs(x="Relative abundance (%)", 
        y="") +
   theme_classic() + 
@@ -37,11 +37,13 @@ p <- ggplot(df, aes(x=abundance, y=weave_factors(Sample, Group), fill=tax)) +
                      breaks=c(0, 0.2, 0.4, 0.6, 0.8, 1), 
                      labels=c("0%", "20%", "40%", "60%", "80%", "100%"), 
                      position="top") + 
-  scale_y_discrete(expand=expansion(mult=c(0.1, 0.1))) + 
+  scale_y_discrete(expand=expansion(mult=c(0.05, 0.05))) + 
   guides(y="axis_nested", 
          y.sec=guide_axis_manual(labels=NULL), 
          fill=guide_legend(ncol=2))
 
-pdf(args[3], width=13, height=5)
+w <- ((max(nchar(meta$Sample)) + max(nchar(meta$Group))) %/% 4) + 11
+h <- nrow(meta) / 2 + 1
+pdf(args[3], width=w, height=h)
 p
 dev.off()
