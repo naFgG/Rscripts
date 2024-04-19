@@ -28,7 +28,7 @@ mystrips <- strip_nested(
   background_x=elem_list_rect(fill=col_x),
   by_layer_x=F,
   background_y=elem_list_rect(fill=col_y),
-  text_y=elem_list_text(angle=0),
+ # text_y=elem_list_text(angle=0),
   by_layer_y=F)
 
 p <- ggplot(df.plot, aes(x=Sample, y=taxon1, size=abundance, color=Phylum)) +
