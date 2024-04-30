@@ -1,2 +1,4 @@
-# 一些R语言Scripts
-后续在md更新结果图片
+# 一些R语言分析、绘图脚本
+
+`pretty_pcoa.R`：记录了PCoA这类图加上置信椭圆、最外部散点连线、质心连线的方法  
+<img src="images/pretty_pcoa.png" width="500" height="700">
