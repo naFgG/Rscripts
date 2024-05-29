@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 
 args <- commandArgs(T)
-# args <- c("genus.Wilcoxon.diff.heatmap.xls", "分组_表型.xls", "mantel_test.pdf")
+# args <- c("物种丰度表（物种在行）", "理化因子表（理化因子在列）", "输出pdf")
 
 genus <- read.table(args[1], header=T, row.names=1, sep="\t", quote="", check.names=F)
 env <- read.table(args[2], header=T, row.names=1, sep="\t", quote="", check.names=F)
@@ -35,6 +35,6 @@ p <- qcorrplot(correlate(env, method="spearman"), type="upper", diag=F) +
          colour=guide_legend(title="Mantel's P-value", order=1),
          fill=guide_colorbar(title="Spearman's r", order=3))
 
-pdf(args[3], width=11)
+pdf(args[3])
 p
 dev.off()
