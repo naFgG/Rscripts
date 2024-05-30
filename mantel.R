@@ -17,7 +17,7 @@ for (i in 1:ncol(genus)) genus_ls[colnames(genus)[i]] <- i
 
 mantel <- mantel_test(genus, env, spec_select=genus_ls) %>% 
   mutate(rd=cut(r, breaks=c(-Inf, 0.25, 0.5, Inf), 
-                labels = c("<= 0.25", "0.25 < x <= 0.5", "< 0.5")),
+                labels = c("<= 0.25", "0.25 < x <= 0.5", "> 0.5")),
          pd=cut(p, breaks=c(-Inf, 0.001, 0.01, 0.05, Inf), 
                 labels=c("<= 0.001", "0.001 < x <= 0.01", "0.01 < x <= 0.05", "> 0.05")))
 
