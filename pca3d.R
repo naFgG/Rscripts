@@ -3,7 +3,7 @@ library(rgl)
 
 args <- commandArgs(T)
 # args
-# 1: x, y, z的坐标，最后两行是 eigvals	和 % variation explained
+# 1: 样本的x, y, z的坐标，最后两行是 eigvals	和 % variation explained
 # 2：样本-分组表
 # 3：输出图形名，只能是png格式
 
