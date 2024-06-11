@@ -2,7 +2,10 @@ rm(list=ls())
 library(rgl)
 
 args <- commandArgs(T)
-# args <- c("C045614/pcoa_euclidean_feature_even.txt", "C045614/mapping.txt", "C045614/pcoa_euclidean.png")
+# args
+# 1: x, y, z的坐标，最后两行是 eigvals	和 % variation explained
+# 2：样本-分组表
+# 3：输出图形名，只能是png格式
 
 df <- read.table(args[1], sep="\t", header=T, quote="", check.names=F, row.names=1)
 coordinate <- df[1: (nrow(df)-2), 1: 3]
