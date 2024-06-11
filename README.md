@@ -9,3 +9,6 @@
 
 `mantel.R`：Mantel检验图。   
 <img src="images/mantel_test.png" width="600" height="500">  
+
+`pca3d.R`：带置信椭圆的3D PCA图。   
+<img src="images/PCA_3D.png" width="600" height="500">  
