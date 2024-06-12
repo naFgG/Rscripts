@@ -21,6 +21,8 @@ group.nums <- length(unique(meta$Group))
 
 if (group.nums == 2) {
   # oplsda
+  # orthoI：0，做PLS-DA；NA，做OPLS-DA，使用交叉验证自动计算正交分量的数量；1，做OPLS-DA，不自动计算正交分量的数量
+  # predI：1，提取1个成分
   oplsda <- opls(df, meta$Group, predI=1, orthoI=1)
   dev.off()
   write.table(oplsda@summaryDF, file=sprintf("%s.OPLS-DA.summary.xls", path), 
