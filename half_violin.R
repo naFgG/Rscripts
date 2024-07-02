@@ -4,10 +4,10 @@ library(dplyr)
 library(tidyverse)
 library(reshape2)
 
-meta <- read.table("sample.group.xls", sep="\t", header=T, quote="", check.names=F, comment.char="")
+meta <- read.table(样本-信息表, sep="\t", header=T, quote="", check.names=F, comment.char="")
 colnames(meta)[1] <- "Sample"
 meta$Group <- factor(meta$Group, levels=unique(meta$Group))
-phylum <- read.table("phylum.xls", sep="\t", header=T, quote="", check.names=F)
+phylum <- read.table(丰度表, sep="\t", header=T, quote="", check.names=F)
 phylum <- phylum %>% filter(Taxonomy=="Firmicutes" | Taxonomy=="Bacteroidota")
 phylum$Taxonomy <- factor(phylum$Taxonomy, levels=phylum$Taxonomy)
 
@@ -26,13 +26,13 @@ df <- melt(phylum)
 colnames(df) <- c("tax", "Sample", "abundance")
 df <- merge(df, meta, by="Sample")
 
+# 两种不同的样式
 p <- ggplot() + 
   geom_half_violin(data=df, aes(x=Group, y=abundance, split=tax, fill=tax), 
                    position="identity", scale="width", bw="nrd") + 
   labs(x="", y="Relative abundance") +
   theme_classic() +
   guides(fill=guide_legend(title=NULL))
-
 ggsave('half_volin2.png', p, width=4, height=3)
 
 p <- ggplot() + 
@@ -43,7 +43,4 @@ p <- ggplot() +
   guides(fill=guide_legend(title=NULL))
 ggsave('half_volin1.png', p, width=4, height=3)
 
-pdf('test.pdf')
-p
-dev.off()
 
