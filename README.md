@@ -22,3 +22,7 @@
 <img src="images/ggtreeExtra.png" width="600" height="600">  
 同一圈绘制两种注释，此图的第二圈用了两种注释  
 <img src="images/ggtreeExtra2.png" width="600" height="600">  
+
+  
+`half_violin.R`：豆荚图。   
+<img src="images/half_volin.png" width="400" height="300">    
