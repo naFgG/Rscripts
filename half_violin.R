@@ -30,7 +30,6 @@ p <- ggplot() +
         legend.justification=c("right", "top")) +
   scale_fill_manual(values=c("#3275A0", "#E6842E")) +
   guides(fill=guide_legend(title=NULL))
-ggsave('half_volin.png', p, width=6, height=5, dpi=900)
 
 pdf(args[3])
 p
