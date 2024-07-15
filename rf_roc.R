@@ -1,5 +1,4 @@
 rm(list=ls())
-library(magrittr)
 library(pROC)
 library(ggplot2)
 library(caret)
