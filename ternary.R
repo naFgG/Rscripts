@@ -43,18 +43,25 @@ for (asv in rownames(asv_df)) {
     if (nrow(sig_groups) == 1){ # 单组
       if_else(sig_groups$diff > 0, enriched_group <- sig_groups$group1, enriched_group <- sig_groups$group2)
     } else if (nrow(sig_groups) == 2) { # 两组
-      if (length(unique(sig_groups$group1)) == 1){
+      if (length(unique(sig_groups$group1)) == 1){ 
         if (all(sig_groups$diff > 0)) {
           enriched_group <- sig_groups$group1[1]
         } else if (all(sig_groups$diff < 0)) {
           enriched_group <- sig_groups %>% filter(diff == max(abs(diff)))
           enriched_group <- enriched_group$group2
         } 
+      } else if (length(unique(sig_groups$group2)) == 1) {
+        if (all(sig_groups$diff > 0)) {
+          enriched_group <- sig_groups %>% filter(diff == max(diff))
+          enriched_group <- enriched_group$group1
+        } else if (all(sig_groups$diff < 0)) {
+          enriched_group <- sig_groups$group2[1]
+        } 
       } else {
         if (all(sig_groups$diff > 0)) {
-          enriched_group <- sig_groups$group1[!sig_groups$group1 %in% sig_groups$group2]
+          enriched_group <- sig_groups$group1[!(sig_groups$group1 %in% sig_groups$group2)]
         } else if (all(sig_groups$diff < 0)) {
-          enriched_group <- sig_groups$group2[!sig_groups$group2 %in% sig_groups$group1]
+          enriched_group <- sig_groups$group2[!(sig_groups$group2 %in% sig_groups$group1)]
         }
       }
     } else if (nrow(sig_groups) == 3) {# 三组
@@ -66,7 +73,6 @@ for (asv in rownames(asv_df)) {
       results[results$ASV == asv, "Group"] <- enriched_group
   }
 }
-
 
 # 按组求平均ASV表
 result_asv <- dcast(asv_long[2:4], ASV ~ Group, mean, value.var="Abundance")
