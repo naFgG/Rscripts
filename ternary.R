@@ -34,18 +34,39 @@ for (asv in rownames(asv_df)) {
     tukey_df <- as.data.frame(tukey_res$Group)
     colnames(tukey_df)[4] <- "padj"
     # 提取均值差异显著的组
-    sig_groups <- rownames(tukey_df)[tukey_df$padj < 0.05]
-    if (length(sig_groups) > 0) {
-      # 比较组均值，均值最大的组为富集组
+    sig_groups <- tukey_df[tukey_df$padj < 0.05, ]
+    # 比较组均值，均值最大的组为富集组
+    for (i in rownames(sig_groups)){
+      sig_groups[i, "group1"] <- unlist(strsplit(i, "-"))[1]
+      sig_groups[i, "group2"] <- unlist(strsplit(i, "-"))[2]
+    }
+    if (nrow(sig_groups) == 1){ # 单组
+      if_else(sig_groups$diff > 0, enriched_group <- sig_groups$group1, enriched_group <- sig_groups$group2)
+    } else if (nrow(sig_groups) == 2) { # 两组
+      if (length(unique(sig_groups$group1)) == 1){
+        if (all(sig_groups$diff > 0)) {
+          enriched_group <- sig_groups$group1[1]
+        } else if (all(sig_groups$diff < 0)) {
+          enriched_group <- sig_groups %>% filter(diff == max(abs(diff)))
+          enriched_group <- enriched_group$group2
+        } 
+      } else {
+        if (all(sig_groups$diff > 0)) {
+          enriched_group <- sig_groups$group1[!sig_groups$group1 %in% sig_groups$group2]
+        } else if (all(sig_groups$diff < 0)) {
+          enriched_group <- sig_groups$group2[!sig_groups$group2 %in% sig_groups$group1]
+        }
+      }
+    } else if (nrow(sig_groups) == 3) {# 三组
       group_means <- aggregate(Abundance ~ Group, data=asv_data, mean)
       # 提取最大值所在行
       enriched_group <- group_means %>% filter(Abundance == max(Abundance))
       enriched_group %<>% .[1, "Group"]
-
-      results[results$ASV == asv, "Group"] <- enriched_group
     }
+      results[results$ASV == asv, "Group"] <- enriched_group
   }
 }
+
 
 # 按组求平均ASV表
 result_asv <- dcast(asv_long[2:4], ASV ~ Group, mean, value.var="Abundance")
