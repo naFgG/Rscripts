@@ -6,12 +6,12 @@ library(tidyverse)
 library(magrittr)
 
 args <- commandArgs(T)
-args <- c("feature.xls", "mapping.txt")
 
+# ASV表
 asv_df <- read.table(args[1], sep="\t", header=T, quote="", check.names=F, row.names=1)
 rownames(asv_df) <- paste0("ASV_", rownames(asv_df))
 asv_df$ASV <- rownames(asv_df)
-# 这个mapping只有 Sample + Group 两列
+# 分组信息表，只有 Sample + Group 两列
 meta <- read.table(args[2], sep="\t", header=T, quote="", check.names=F)
 
 asv_long <- melt(asv_df, id="ASV")
