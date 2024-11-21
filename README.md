@@ -1,18 +1,14 @@
 # 一些R语言分析、绘图脚本
 
-## License and Attribution
+### License and Attribution
 
 This project is licensed under the GNU General Public License v3.0 (GPL-3.0).  
 If you use or distribute any code from this repository, you are required to:
 1. Retain the original copyright notice and license information.
-2. Provide clear attribution to this repository as the source: [https://github.com/naFgG/Rscripts].
+2. Provide clear attribution to this repository as the source: https://github.com/naFgG/Rscripts.
 3. Distribute any derived works under the same license (GPL-3.0).
 
 Failure to comply with these requirements constitutes a violation of the GPL-3.0 license.  
-
-### Copyright
-
-Copyright (C) [年份] [你的名字或组织名]
 
 `pretty_pcoa.R`：记录了PCoA这类图加上置信椭圆、最外部散点连线、质心连线的方法  
 <img src="images/pretty_pcoa.png" width="500" height="700">  
