@@ -1,16 +1,17 @@
 rm(list=ls())
-source("common_color.R")
 library(ggplot2)
 library(dplyr)
 library(openxlsx)
 library(reshape2)
 
-data <- read.xlsx("alpha多样性/index.xlsx")
+# 列为a指数名，行为样本名
+data <- read.xlsx("EXCEL")
 rownames(data) <- data$Sample
-group <- read.xlsx("alpha多样性/group.xlsx")
+# 样本分组表
+group <- read.xlsx("EXCEL")
 data <- data[group$Sample, ]
 group$Group <- factor(group$Group, levels=unique(group$Group))
-mycolor <- deal_color("micro", length(unique(group$Group)), levels(group$Group))
+mycolor <- "颜色选择器"
 
 out <- merge(data, group, by="Sample", sort=F)
 out <- melt(out)
@@ -20,6 +21,7 @@ facet_max <- out %>%
   group_by(index) %>%
   summarise(y_max = max(value, na.rm = TRUE))
 
+# 分指数的各组间kw检验
 kw_labels <- out %>%
   group_by(index) %>%
   summarise(
@@ -45,7 +47,7 @@ p <- ggplot(out, aes(x=Group, y=value, fill=Group, color=Group)) +
   geom_text(data=kw_labels, aes(x=1, y=y_max, label=label), inherit.aes=F, hjust=0, size=3) + 
   scale_y_continuous(expand=expansion(mult=c(0.1, 0.1)))
 
-pdf("alpha多样性/index.pdf", width=8, height=8)
+pdf("X.pdf", width=8, height=8)
 print(p)
 dev.off()
 
